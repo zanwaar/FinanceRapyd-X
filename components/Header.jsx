@@ -22,7 +22,7 @@ export const Header = () => {
           <Flex maxW={"3xl"} alignItems="center" gap="2">
             <Avatar name="Dan Abrahmov" src={session.user.image} />
             <Box p="2">
-              <Heading fontSize={{ base: "12px", md: "18px" }}>
+              <Heading fontSize={{ base: "8px", md: "18px" }}>
                 {session.user.email ?? session.user.name}
               </Heading>
             </Box>
