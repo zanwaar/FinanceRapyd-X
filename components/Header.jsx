@@ -20,9 +20,13 @@ export const Header = () => {
       {session && (
         <Box bg="white" p="5">
           <Flex maxW={"3xl"} alignItems="center" gap="2">
-            <Avatar name="Dan Abrahmov" src={session.user.image} />
+            <Avatar
+              size={{ base: "sm", md: "md" }}
+              name="Dan Abrahmov"
+              src={session.user.image}
+            />
             <Box p="2">
-              <Heading fontSize={{ base: "8px", md: "18px" }}>
+              <Heading fontSize={{ base: "9px", md: "18px" }}>
                 {session.user.email ?? session.user.name}
               </Heading>
             </Box>
