@@ -29,7 +29,7 @@ export const Header = () => {
             <Spacer />
 
             <Button
-              size={{ base: "xs", md: "sm", lg: "md" }}
+              size={{ base: "sm", md: "md" }}
               rightIcon={<FiLogOut />}
               colorScheme="teal"
               variant="outline"
