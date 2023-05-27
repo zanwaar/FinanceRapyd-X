@@ -26,7 +26,7 @@ export const Header = () => {
               src={session.user.image}
             />
             <Box p="2">
-              <Heading fontSize={{ base: "10px", md: "18px" }}>
+              <Heading fontSize={{ base: "11px", md: "18px" }}>
                 {session.user.email ?? session.user.name}
               </Heading>
             </Box>
