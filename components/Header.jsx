@@ -22,17 +22,17 @@ export const Header = () => {
           <Flex maxW={"3xl"} alignItems="center" gap="2">
             <Avatar name="Dan Abrahmov" src={session.user.image} />
             <Box p="2">
-              <Heading size="md">
+              <Heading fontSize={{ base: "12px", md: "18px" }}>
                 {session.user.email ?? session.user.name}
               </Heading>
             </Box>
             <Spacer />
 
             <Button
+              size={{ base: "xs", md: "sm", lg: "md" }}
               rightIcon={<FiLogOut />}
               colorScheme="teal"
               variant="outline"
-              fontSize={15}
               borderRadius="full"
               onClick={(e) => {
                 e.preventDefault();
