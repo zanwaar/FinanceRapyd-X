@@ -1,8 +1,14 @@
 import Head from "next/head";
-import { Spinner } from "@chakra-ui/react";
-
+import { Button, Card, CardBody, CardFooter, CardHeader, Heading, SimpleGrid, Spinner, Stack, Text } from "@chakra-ui/react";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useState } from "react";
+import Layout from "../components/Layout";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   return (
     <>
       <Head>
@@ -12,7 +18,37 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Spinner color="red.500" />
+        {/* <Heading>Wecome</Heading> */}
+        <Layout>
+          <Stack spacing={10}>
+            <Heading pt={10} color={'teal'}>Finance Service</Heading>
+            {/* <SimpleGrid
+              spacing={4}
+              templateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+            >
+              <Card>
+                <CardHeader>
+                  <Heading size="md"> Customer dashboard</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>
+                    View a summary of all your customers over the last month.
+                  </Text>
+                </CardBody>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <Heading size="md"> Customer dashboard</Heading>
+                </CardHeader>
+                <CardBody>
+                  <Text>
+                    View a summary of all your customers over the last month.
+                  </Text>
+                </CardBody>
+              </Card>
+            </SimpleGrid> */}
+          </Stack>
+        </Layout>
       </main>
     </>
   );
