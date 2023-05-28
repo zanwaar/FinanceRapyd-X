@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Heading, Spinner, Stack } from "@chakra-ui/react";
+import { Flex, Heading, Spinner, Stack, useColorModeValue } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
 
@@ -8,7 +8,14 @@ export default function Home() {
   if (!session) {
     return (
       <>
-        <Spinner />
+        <Flex
+          minH={"100vh"}
+          align={"center"}
+          justify={"center"}
+          bg={useColorModeValue("gray.50", "gray.800")}
+        >
+          <Spinner />
+        </Flex>
       </>
     );
   }

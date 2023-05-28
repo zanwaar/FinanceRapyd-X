@@ -6,13 +6,31 @@ import {
   Flex,
   Heading,
   Spacer,
+  Spinner,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 
 export const Header = () => {
   const { data: session, status } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+  if (isLoading) {
+    return (
+      <>
+        <Flex
+          minH={"100vh"}
+          align={"center"}
+          justify={"center"}
+          bg={useColorModeValue("gray.50", "gray.800")}
+        >
+          <Spinner />
+        </Flex>
+      </>
+    );
+  }
+
   return (
     <>
       {session && (
@@ -35,6 +53,7 @@ export const Header = () => {
               borderRadius="full"
               onClick={(e) => {
                 e.preventDefault();
+                setIsLoading(true);
                 signOut();
               }}
             >

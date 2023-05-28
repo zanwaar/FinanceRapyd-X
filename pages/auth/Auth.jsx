@@ -75,13 +75,10 @@ export default function Auth({ providers }) {
 }
 export async function getServerSideProps(context) {
   const session = await getServerSession(context.req, context.res, authOptions);
-
   if (session) {
     return { redirect: { destination: "/" } };
   }
-
   const providers = await getProviders();
-
   return {
     props: { providers: providers ?? [] },
   };
