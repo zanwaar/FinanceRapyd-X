@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/api/examples/protected.js", "pages/api/examples/jwt.js", "pages/api/examples/session.js"  ],
   "exclude": [
     "node_modules"
   ]
