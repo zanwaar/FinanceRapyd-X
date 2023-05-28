@@ -23,7 +23,7 @@ export const Header = () => {
           minH={"100vh"}
           align={"center"}
           justify={"center"}
-          bg="gray.800"
+          bg="white"
         >
           <Spinner />
         </Flex>

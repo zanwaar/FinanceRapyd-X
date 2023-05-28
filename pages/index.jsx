@@ -8,7 +8,7 @@ export default function Home() {
   if (!session) {
     return (
       <>
-        <Flex minH={"100vh"} align={"center"} justify={"center"} bg="gray.800">
+        <Flex minH={"100vh"} align={"center"} justify={"center"} bg="white">
           <Spinner />
         </Flex>
       </>
