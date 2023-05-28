@@ -34,15 +34,15 @@ export const Header = () => {
   return (
     <>
       {session && (
-        <Box bg="white" py={{ base: "2", md: "5" }} px={{ base: "4", md: "0" }}>
+        <Box bg="white" py={{ base: "3", md: "5" }} px={{ base: "4", md: "0" }}>
           <Flex maxW={"3xl"} alignItems="center" gap="2">
             <Avatar
-              size={{ base: "xs", md: "md" }}
+              size={{ base: "sm", md: "md" }}
               name={session.user.name}
               src={session.user.image}
             />
             <Box p="2">
-              <Heading fontSize={{ base: "xs", md: "md" }}>
+              <Heading fontSize={{ base: "sm", md: "md" }}>
                 {session.user.email ?? session.user.name}
               </Heading>
             </Box>
