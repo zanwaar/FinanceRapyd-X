@@ -19,7 +19,7 @@ export default function Home() {
       <main>
         <Layout>
           <Stack spacing={10}>
-            <Heading pt={10} color={"teal"}>
+            <Heading pt={{base:'5', md:'10'}} fontSize={{base:"xl", md:"3xl"}} color={"teal"}>
               Finance Service
             </Heading>
           </Stack>
