@@ -61,7 +61,7 @@ export const Header = () => {
             </Box>
             <Button
               display={{ base: "none", md: "flex" }}
-              size="md"
+             size="sm"
               rightIcon={<FiLogOut />}
               colorScheme="teal"
               variant="outline"
