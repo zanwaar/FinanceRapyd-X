@@ -66,7 +66,7 @@ export default function Home() {
               fontSize={{ base: "2xl", md: "3xl" }}
               color={"teal"}
             >
-              Payment Methods
+              PAYMENTS
             </Heading>
             <form onSubmit={handleSubmit}>
               <Stack display={{ base: "flex", md: "flex" }}>
@@ -81,7 +81,7 @@ export default function Home() {
                     {bgColor: "teal.700"}
                   }
                 >
-                 Test Pay Rp 1.000.000.00
+                 Test Pay &nbsp;&nbsp;Rp 1,000,000.00
                 </Button>
               </Stack>
 
