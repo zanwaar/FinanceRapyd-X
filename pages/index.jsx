@@ -24,7 +24,7 @@ export default function Home() {
     event.preventDefault();
     let url_data = window.location.protocol + "//" + window.location.host;
     const requestBody = {
-      amount: 123.45,
+      amount: 1000000,
       complete_payment_url:
         "https://finance-rapyd-x.vercel.app/payment/success",
       country: "ID",
@@ -81,7 +81,7 @@ export default function Home() {
                     {bgColor: "teal.700"}
                   }
                 >
-                  Pay
+                 Test Pay Rp 1.000.000.00
                 </Button>
               </Stack>
 
