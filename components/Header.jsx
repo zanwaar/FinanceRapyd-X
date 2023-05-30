@@ -20,6 +20,7 @@ export const Header = () => {
     return (
       <>
         <Flex
+          zIndex={100}
           minH={"100vh"}
           align={"center"}
           justify={"center"}
@@ -61,7 +62,7 @@ export const Header = () => {
             </Box>
             <Button
               display={{ base: "none", md: "flex" }}
-             size="sm"
+              size="sm"
               rightIcon={<FiLogOut />}
               colorScheme="teal"
               variant="outline"

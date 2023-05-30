@@ -7,6 +7,7 @@ import {
   Text,
   Spinner,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
@@ -23,7 +24,7 @@ export default function Home() {
   const [sdata, setSdata] = useState({});
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const [isDisabel, setIsDisabel] = useState(true);
+  const toast = useToast();
 
   const [amount, setAmount] = useState(100000);
   const [country, setCountry] = useState();
@@ -36,13 +37,11 @@ export default function Home() {
     event.preventDefault();
     const url_success = "https://finance-rapyd-x.vercel.app/payment/success";
     const url_error = "https://finance-rapyd-x.vercel.app/payment/error";
-
     const currentTime = new Date();
     const expirationTime = new Date(
       currentTime.getTime() + 24 * 60 * 60 * 1000
     );
     const expirationTimestamp = Math.floor(expirationTime.getTime() / 1000);
-
     const requestBody = {
       amount: amount,
       complete_payment_url: url_success,
@@ -52,18 +51,26 @@ export default function Home() {
       language: "en",
       expiration: expirationTimestamp,
     };
-    console.log(requestBody);
     axios
       .post("/api/rapyd", requestBody)
       .then((response) => {
+        console.log(response);
         let data = JSON.parse(response.data);
         router.push(data.data.redirect_url);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        // console.error(error);
+        toast({
+          position: "top-right",
+          title: "Your country is not yet supported",
+          status: "error",
+          isClosable: true,
+        });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
-    // Panggil API untuk mendapatkan daftar opsi pencarian
     axios
       .get("api/rapyd/country")
       .then((response) => {
@@ -78,7 +85,6 @@ export default function Home() {
     // Menjalankan pencarian berdasarkan opsi yang dipilih
     const results = options.filter((option) => option.id === selectedOption);
     setSearchResults(results);
-    console.log(results);
     results.map((item) => {
       setCountry(item.iso_alpha2);
       setCurrency(item.currency_code);
@@ -88,7 +94,7 @@ export default function Home() {
   if (!session) {
     return (
       <>
-        <Flex minH={"100vh"} align={"center"} justify={"center"} bg="white">
+        <Flex zIndex={100} minH={"100vh"} align={"center"} justify={"center"} bg="white">
           <Spinner />
         </Flex>
       </>
@@ -106,7 +112,7 @@ export default function Home() {
             >
               Payment
             </Heading>
-            <Stack spacing={5}>
+            <Stack spacing={2}>
               <Text color={"gray.600"}>
                 Accept payments from more than 100 countries
               </Text>
@@ -124,14 +130,6 @@ export default function Home() {
             </Stack>
             <form onSubmit={handleSubmit}>
               <Stack>
-                {searchResults.map((result) => (
-                  <Box key={result.id}>
-                    <Text color={"gray.600"}>
-                      Currency Name&nbsp;:&nbsp;
-                      {result.currency_name}
-                    </Text>
-                  </Box>
-                ))}
                 {currencySign && (
                   <Button
                     disabled
@@ -143,9 +141,21 @@ export default function Home() {
                     color={"white"}
                     _hover={{ bgColor: "teal.700" }}
                   >
-                    Test Pay &nbsp;{currencySign}&nbsp;{amount}
+                    Test Pay &nbsp;{currencySign}&nbsp;
+                    {amount.toLocaleString({
+                      style: "currency",
+                      currency: "IDR",
+                    })}
                   </Button>
                 )}
+                {searchResults.map((result) => (
+                  <Box key={result.id}>
+                    <Text color={"gray.600"}>
+                      Currency Name&nbsp;:&nbsp;
+                      {result.currency_name}
+                    </Text>
+                  </Box>
+                ))}
               </Stack>
             </form>
           </Stack>
