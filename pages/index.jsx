@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   Heading,
+  Text,
   Spinner,
   Stack,
   useColorModeValue,
