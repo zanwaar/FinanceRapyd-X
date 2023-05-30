@@ -70,6 +70,7 @@ export default function Home() {
             >
               Payment
             </Heading>
+<Text>Accept payments from more than 100 countries</Text>
             <Stack align={"center"} justify={"center"} alignItems={"center"}>
               <Box
 
