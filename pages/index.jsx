@@ -11,45 +11,82 @@ import {
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import PaymentIcon from "../components/icon";
+import Select from "react-select";
+import SelectInput from "../components/SelectInput";
 
 export default function Home() {
+  const [options, setOptions] = useState([]);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const [sdata, setSdata] = useState({});
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDisabel, setIsDisabel] = useState(true);
+
+  const [amount, setAmount] = useState(100000);
+  const [country, setCountry] = useState();
+  const [currency, setCurrency] = useState();
+  const [currencySign, setCurrencySign] = useState("");
   const router = useRouter();
 
   const handleSubmit = (event) => {
     setIsLoading(true);
     event.preventDefault();
-    let url_data = window.location.protocol + "//" + window.location.host;
-    const requestBody = {
-      amount: 1000000,
-      complete_payment_url:
-        "https://finance-rapyd-x.vercel.app/payment/success",
-      country: "ID",
-      currency: "IDR",
-      error_payment_url: "https://finance-rapyd-x.vercel.app/payment/error",
-      language: "en",
-      expiration: 1685567906,
-    };
+    const url_success = "https://finance-rapyd-x.vercel.app/payment/success";
+    const url_error = "https://finance-rapyd-x.vercel.app/payment/error";
 
+    const currentTime = new Date();
+    const expirationTime = new Date(
+      currentTime.getTime() + 24 * 60 * 60 * 1000
+    );
+    const expirationTimestamp = Math.floor(expirationTime.getTime() / 1000);
+
+    const requestBody = {
+      amount: amount,
+      complete_payment_url: url_success,
+      country: country,
+      currency: currency,
+      error_payment_url: url_error,
+      language: "en",
+      expiration: expirationTimestamp,
+    };
+    console.log(requestBody);
     axios
       .post("/api/rapyd", requestBody)
       .then((response) => {
         let data = JSON.parse(response.data);
-        setSdata(data);
-        console.log(data.data.redirect_url);
-        console.log(sdata);
         router.push(data.data.redirect_url);
-        // Lakukan tindakan lanjutan setelah pembuatan payment method berhasil
       })
       .catch((error) => console.error(error));
   };
 
+  useEffect(() => {
+    // Panggil API untuk mendapatkan daftar opsi pencarian
+    axios
+      .get("api/rapyd/country")
+      .then((response) => {
+        let data1 = JSON.parse(response.data);
+        setOptions(data1.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  const handleSelectChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+    // Menjalankan pencarian berdasarkan opsi yang dipilih
+    const results = options.filter((option) => option.id === selectedOption);
+    setSearchResults(results);
+    console.log(results);
+    results.map((item) => {
+      setCountry(item.iso_alpha2);
+      setCurrency(item.currency_code);
+      setCurrencySign(item.currency_sign);
+    });
+  };
   if (!session) {
     return (
       <>
@@ -71,29 +108,46 @@ export default function Home() {
             >
               Payment
             </Heading>
-<Text>Accept payments from more than 100 countries</Text>
-            <Stack align={"center"} justify={"center"} alignItems={"center"}>
-              <Box
+            <Stack spacing={5}>
+              <Text color={"gray.600"}>
+                Accept payments from more than 100 countries
+              </Text>
+              <SelectInput
+                options={options}
+                value={selectedOption}
+                onChange={handleSelectChange}
+              />
+            </Stack>
 
-                w={{ base: "350px", md: "400px" }}
-              >
+            <Stack align={"center"} justify={"center"} alignItems={"center"}>
+              <Box w={{ base: "350px", md: "400px" }}>
                 <PaymentIcon />
               </Box>
             </Stack>
-
             <form onSubmit={handleSubmit}>
               <Stack>
-                <Button
-                  type="submit"
-                  isLoading={isLoading}
-                  size="md"
-                  bgColor={"teal"}
-                  shadow={"md"}
-                  color={"white"}
-                  _hover={{ bgColor: "teal.700" }}
-                >
-                  Test Pay &nbsp;&nbsp;Rp 1,000,000.00
-                </Button>
+                <ul>
+                  {searchResults.map((result) => (
+                    <li key={result.id}>
+                      Currency Name&nbsp;:&nbsp;
+                      {result.currency_name}
+                    </li>
+                  ))}
+                </ul>
+                {currencySign && (
+                  <Button
+                    disabled
+                    type="submit"
+                    isLoading={isLoading}
+                    size="md"
+                    bgColor={"teal"}
+                    shadow={"md"}
+                    color={"white"}
+                    _hover={{ bgColor: "teal.700" }}
+                  >
+                    Test Pay &nbsp;{currencySign} 10000
+                  </Button>
+                )}
               </Stack>
 
               {/* <button type="submit">Create</button> */}
