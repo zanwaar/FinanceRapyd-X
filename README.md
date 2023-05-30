@@ -1,5 +1,4 @@
-## Finance-rapyd-x
-# Payment X Rapyd
+# Finance-rapyd-x
 
 **Docs rapyd https://docs.rapyd.net/build-with-rapyd/reference/api-reference**
 
