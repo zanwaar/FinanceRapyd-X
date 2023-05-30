@@ -145,7 +145,7 @@ export default function Home() {
                     {amount.toLocaleString({
                       style: "currency",
                       currency: "IDR",
-                    })}
+                    })}&nbsp;{currency}
                   </Button>
                 )}
                 {searchResults.map((result) => (
