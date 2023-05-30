@@ -1,5 +1,6 @@
 import Head from "next/head";
 import {
+  Box,
   Button,
   Flex,
   Heading,
@@ -12,6 +13,7 @@ import Layout from "../components/Layout";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import PaymentIcon from "../components/icon";
 
 export default function Home() {
   const [sdata, setSdata] = useState({});
@@ -60,16 +62,25 @@ export default function Home() {
     <>
       <main>
         <Layout>
-          <Stack spacing={10}>
+          <Stack>
             <Heading
               pt={{ base: "5", md: "10" }}
               fontSize={{ base: "2xl", md: "3xl" }}
               color={"teal"}
             >
-              PAYMENTS
+              Payment
             </Heading>
+            <Stack align={"center"} justify={"center"} alignItems={"center"}>
+              <Box
+
+                w={{ base: "350px", md: "400px" }}
+              >
+                <PaymentIcon />
+              </Box>
+            </Stack>
+
             <form onSubmit={handleSubmit}>
-              <Stack display={{ base: "flex", md: "flex" }}>
+              <Stack>
                 <Button
                   type="submit"
                   isLoading={isLoading}
@@ -77,11 +88,9 @@ export default function Home() {
                   bgColor={"teal"}
                   shadow={"md"}
                   color={"white"}
-                  _hover={
-                    {bgColor: "teal.700"}
-                  }
+                  _hover={{ bgColor: "teal.700" }}
                 >
-                 Test Pay &nbsp;&nbsp;Rp 1,000,000.00
+                  Test Pay &nbsp;&nbsp;Rp 1,000,000.00
                 </Button>
               </Stack>
 
