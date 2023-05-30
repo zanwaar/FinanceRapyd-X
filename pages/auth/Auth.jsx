@@ -15,6 +15,7 @@ import { useState } from "react";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Head from "next/head";
+
 export default function Auth({ providers }) {
   const [isLoading, setIsLoading] = useState(false);
   const socialAction = (action) => {

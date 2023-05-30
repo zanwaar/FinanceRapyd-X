@@ -1,10 +1,5 @@
 import Head from "next/head";
-import {
-  Box,
-  Container,
-  useColorModeValue,
-  createIcon,
-} from "@chakra-ui/react";
+import { Box, Container, useColorModeValue } from "@chakra-ui/react";
 import { Header } from "./Header";
 
 export default function Layout({ children }) {
@@ -28,4 +23,3 @@ export default function Layout({ children }) {
     </>
   );
 }
-

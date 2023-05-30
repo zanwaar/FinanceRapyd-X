@@ -7,7 +7,6 @@ import {
   Heading,
   Spacer,
   Spinner,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import React, { useState } from "react";
@@ -16,26 +15,11 @@ import { FiLogOut } from "react-icons/fi";
 export const Header = () => {
   const { data: session, status } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  if (isLoading) {
-    return (
-      <>
-        <Flex
-          zIndex={100}
-          minH={"100vh"}
-          align={"center"}
-          justify={"center"}
-          bg="white"
-        >
-          <Spinner />
-        </Flex>
-      </>
-    );
-  }
-
   return (
     <>
       {session && (
         <Box bg="white" py={{ base: "3", md: "5" }} px={{ base: "4", md: "0" }}>
+          {isLoading && <Spinner color="teal" />}
           <Flex maxW={"3xl"} alignItems="center" gap="2">
             <Avatar
               size={{ base: "sm", md: "md" }}
@@ -44,7 +28,7 @@ export const Header = () => {
             />
             <Box p="2">
               <Heading fontSize={{ base: "sm", md: "md" }}>
-                {session.user.email ?? session.user.name}
+                {session.user.name ?? session.user.email}
               </Heading>
             </Box>
             <Spacer />

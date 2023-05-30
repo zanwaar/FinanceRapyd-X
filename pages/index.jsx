@@ -18,18 +18,19 @@ import PaymentIcon from "../components/icon";
 import SelectInput from "../components/SelectInput";
 
 export default function Home() {
+  const { data: session } = useSession();
+
   const [options, setOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [sdata, setSdata] = useState({});
-  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
 
   const [amount, setAmount] = useState(100000);
   const [country, setCountry] = useState();
   const [currency, setCurrency] = useState();
   const [currencySign, setCurrencySign] = useState("");
+
+  const toast = useToast();
   const router = useRouter();
 
   const handleSubmit = (event) => {
@@ -54,7 +55,7 @@ export default function Home() {
     axios
       .post("/api/rapyd", requestBody)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         let data = JSON.parse(response.data);
         router.push(data.data.redirect_url);
       })
@@ -74,17 +75,18 @@ export default function Home() {
     axios
       .get("api/rapyd/country")
       .then((response) => {
-        let data1 = JSON.parse(response.data);
-        setOptions(data1.data);
+        let data_country = JSON.parse(response.data);
+        setOptions(data_country.data);
       })
       .catch((error) => console.error(error));
   }, []);
 
   const handleSelectChange = (selectedOption) => {
     setSelectedOption(selectedOption);
-    // Menjalankan pencarian berdasarkan opsi yang dipilih
+
     const results = options.filter((option) => option.id === selectedOption);
     setSearchResults(results);
+
     results.map((item) => {
       setCountry(item.iso_alpha2);
       setCurrency(item.currency_code);
@@ -94,7 +96,13 @@ export default function Home() {
   if (!session) {
     return (
       <>
-        <Flex zIndex={100} minH={"100vh"} align={"center"} justify={"center"} bg="white">
+        <Flex
+          zIndex={100}
+          minH={"100vh"}
+          align={"center"}
+          justify={"center"}
+          bg="white"
+        >
           <Spinner />
         </Flex>
       </>
@@ -145,7 +153,8 @@ export default function Home() {
                     {amount.toLocaleString({
                       style: "currency",
                       currency: "IDR",
-                    })}&nbsp;{currency}
+                    })}
+                    &nbsp;{currency}
                   </Button>
                 )}
                 {searchResults.map((result) => (
