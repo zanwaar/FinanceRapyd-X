@@ -7,7 +7,6 @@ import {
   Text,
   Spinner,
   Stack,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
 import Layout from "../components/Layout";
@@ -15,7 +14,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import PaymentIcon from "../components/icon";
-import Select from "react-select";
 import SelectInput from "../components/SelectInput";
 
 export default function Home() {
@@ -126,14 +124,14 @@ export default function Home() {
             </Stack>
             <form onSubmit={handleSubmit}>
               <Stack>
-                <ul>
-                  {searchResults.map((result) => (
-                    <li key={result.id}>
+                {searchResults.map((result) => (
+                  <Box key={result.id}>
+                    <Text color={"gray.600"}>
                       Currency Name&nbsp;:&nbsp;
                       {result.currency_name}
-                    </li>
-                  ))}
-                </ul>
+                    </Text>
+                  </Box>
+                ))}
                 {currencySign && (
                   <Button
                     disabled
@@ -145,18 +143,11 @@ export default function Home() {
                     color={"white"}
                     _hover={{ bgColor: "teal.700" }}
                   >
-                    Test Pay &nbsp;{currencySign} 10000
+                    Test Pay &nbsp;{currencySign}&nbsp;{amount}
                   </Button>
                 )}
               </Stack>
-
-              {/* <button type="submit">Create</button> */}
             </form>
-            {/* <ul>
-              {paymentMethods.map((method) => (
-                <li key={method.id}>{method.name}</li>
-              ))}
-            </ul> */}
           </Stack>
         </Layout>
       </main>
