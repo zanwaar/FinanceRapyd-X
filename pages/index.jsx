@@ -63,7 +63,7 @@ export default function Home() {
         // console.error(error);
         toast({
           position: "top-right",
-          title: "Your country is not yet supported",
+          title: "Incorrect currency code request",
           status: "error",
           isClosable: true,
         });
